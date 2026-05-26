@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Follower Tracker</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(255,255,255,0.97);
+      padding: 36px;
+      border-radius: 28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 28px;
+    }
+
+    .instructions {
+      background: #f9fafb;
+      border-left: 5px solid #833ab4;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 28px;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .instructions code {
+      display: block;
+      margin-top: 12px;
+      padding: 12px;
+      background: #111827;
+      color: #ffffff;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+      overflow-x: auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      border: 2px dashed #d1d5db;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .drop-zone {
+      display: block;
+      width: 100%; 
+      padding: 24px;
+      text-align: center;
+      border: 3px dashed #c084fc;
+      border-radius: 16px;
+      background: #faf5ff;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .drop-zone.dragover {
+      background: #f3e8ff;
+      border-color: #7e22ce;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    textarea {
+      width: 100%; 
+      height: 220px;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-family: Consolas, monospace;
+      resize: vertical;
+      display: block;
+      min-width: 0;
+    }
+
+    button {
+      display: block;
+      margin: 28px auto 0;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045);
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(131,58,180,0.35);
+    }
+
+    #oldFileName,
+    #newFileName {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 10px;
+      word-break: break-word;
+    }
+
+    #summary {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.8;
+    }
+
+    .small-btn {
+      display: inline-block;
+      margin: 10px 6px 0 0;
+      padding: 8px 14px;
+      font-size: 13px;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+
+    .results {
+      margin-top: 24px;
+    }
+
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      clear: both;
+    }
+
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+      .container { padding: 20px; }
+      h1 { font-size: 2.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📈 Instagram Follower Tracker</h1>
+    <p class="subtitle">Upload or drag and drop two follower files to see who unfollowed you.</p>
+
+    <div class="instructions">
+      <strong>How to get your followers list:</strong><br>
+      1. Open Instagram on your computer.<br>
+      2. Go to your profile → Followers.<br>
+      3. Scroll all the way to the bottom.<br>
+      4. Press <strong>F12 (or Fn + F12)</strong> and open the <strong>Console</strong> tab.<br>
+      5. If <strong>allow pasting</strong> doesn't work at first, type any letter (like <strong>a</strong>) once, then type <strong>allow pasting</strong> and press Enter.<br>
+      6. Paste the script below and press Enter.<br>
+      7. A file named <strong>followers.txt</strong> will be downloaded. Rename it to something like <strong>followers1.txt</strong>.<br>
+      8. For the second time, Rename it followers2.txt, And drop them both below 👇
+
+      <code>const dialog = document.querySelector('[role="dialog"]');
+if (!dialog) {
+  alert('Open your Followers popup first.');
+} else {
+  const usernames = [...dialog.querySelectorAll('a')]
+    .map(a => a.textContent.trim())
+    .filter(text =>
+      text.length > 0 &&
+      !text.includes(' ') &&
+      /^[A-Za-z0-9._]+$/.test(text)
+    );
+
+  const unique = [...new Set(usernames)].sort();
+
+  const blob = new Blob([unique.join('\n')], { type: 'text/plain' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'followers.txt';
+  link.click(); 
+}</code>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>📂 Previous Followers</h3>
+        <label class="drop-zone" id="oldDrop">
+          Drag & Drop Old File Here<br>
+          <small>or click to choose</small>
+          <input type="file" id="oldFile" accept=".txt">
+        </label>
+        <div id="oldFileName">No file selected</div>
+        <textarea id="oldFollowers" placeholder="Or paste old followers here"></textarea>
+      </div>
+
+      <div class="card">
+        <h3>🆕 Current Followers</h3>
+        <label class="drop-zone" id="newDrop">
+          Drag & Drop Current File Here<br>
+          <small>or click to choose</small>
+          <input type="file" id="newFile" accept=".txt">
+        </label>
+        <div id="newFileName">No file selected</div>
+        <textarea id="newFollowers" placeholder="Or paste current followers here"></textarea>
+      </div>
+    </div>
+
+    <button id="compareBtn">🔍 Compare Followers</button>
+
+    <div id="summary"></div>
+
+    <div class="grid results">
+      <div class="card">
+        <h3>💔 Unfollowed You</h3>
+        <textarea id="unfollowed" readonly></textarea>
+        <button class="small-btn" onclick="downloadText('unfollowed', 'unfollowed-users.txt')">⬇ Download</button>
+      </div>
+
+      <div class="card">
+        <h3>🎉 New Followers</h3>
+        <textarea id="followed" readonly></textarea>
+        <button class="small-btn" onclick="downloadText('followed', 'new-followers.txt')">⬇ Download</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Built with HTML, CSS and JavaScript.<br>
+      Created by <a href="https://www.instagram.com/probably_akhil/" target="_blank" rel="noopener noreferrer" style="color:#833ab4;font-weight:bold;text-decoration:none;">@probably_akhil</a>
+    </div>
+  </div>
+
+  <script>
+    function parseFollowers(text) {
+      var lines = text.split(/\r?\n/);
+      var cleaned = [];
+      var seen = {};
+      for (var i = 0; i < lines.length; i++) {
+        var username = lines[i].trim();
+        if (username && !seen[username]) {
+          seen[username] = true;
+          cleaned.push(username);
+        }
+      }
+      cleaned.sort();
+      return cleaned;
+    }
+
+    function readFile(file, textareaId, fileNameId) {
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById(textareaId).value = e.target.result;
+        document.getElementById(fileNameId).textContent = 'Loaded: ' + file.name;
+      };
+      reader.readAsText(file);
+    }
+
+    function setupDrop(dropId, inputId, textareaId, fileNameId) {
+      var drop = document.getElementById(dropId);
+      var input = document.getElementById(inputId);
+
+      input.addEventListener('change', function() {
+        readFile(this.files[0], textareaId, fileNameId);
+      });
+
+      drop.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        drop.classList.add('dragover');
+      });
+
+      drop.addEventListener('dragleave', function() {
+        drop.classList.remove('dragover');
+      });
+
+      drop.addEventListener('drop', function(e) {
+        e.preventDefault();
+        drop.classList.remove('dragover');
+        readFile(e.dataTransfer.files[0], textareaId, fileNameId);
+      });
+    }
+
+    function compareFollowers() {
+      var oldList = parseFollowers(document.getElementById('oldFollowers').value);
+      var newList = parseFollowers(document.getElementById('newFollowers').value);
+
+      var oldSet = {}, newSet = {};
+      var i;
+      for (i = 0; i < oldList.length; i++) oldSet[oldList[i]] = true;
+      for (i = 0; i < newList.length; i++) newSet[newList[i]] = true;
+
+      var unfollowed = [];
+      var followed = [];
+
+      for (i = 0; i < oldList.length; i++) {
+        if (!newSet[oldList[i]]) unfollowed.push(oldList[i]);
+      }
+
+      for (i = 0; i < newList.length; i++) {
+        if (!oldSet[newList[i]]) followed.push(newList[i]);
+      }
+
+      document.getElementById('summary').innerHTML =
+        'Previous followers: ' + oldList.length + '<br>' +
+        'Current followers: ' + newList.length + '<br>' +
+        'Unfollowers found: ' + unfollowed.length;
+
+      document.getElementById('unfollowed').value =
+        unfollowed.length ? unfollowed.join('\n') : 'No one unfollowed.';
+
+      document.getElementById('followed').value =
+        followed.length ? followed.join('\n') : 'No new followers.';
+    }
+
+    function downloadText(textareaId, filename) {
+      var text = document.getElementById(textareaId).value;
+      var blob = new Blob([text], { type: 'text/plain' });
+      var link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+    }
+
+    setupDrop('oldDrop', 'oldFile', 'oldFollowers', 'oldFileName');
+    setupDrop('newDrop', 'newFile', 'newFollowers', 'newFileName');
+    document.getElementById('compareBtn').addEventListener('click', compareFollowers);
+  </script>
+</body>
+</html>
