@@ -5,9 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instagram Follower Tracker</title>
   <style>
+    :root {
+      --bg1: #833ab4;
+      --bg2: #fd1d1d;
+      --bg3: #fcb045;
+      --card-bg: white;
+      --text: #111827;
+      --muted: #6b7280;
+      --input-bg: white;
+    }
+
+    body.dark {
+      --card-bg: #1f2937;
+      --text: #f9fafb;
+      --muted: #d1d5db;
+      --input-bg: #111827;
+    }
     * { box-sizing: border-box; }
 
     body {
+      color: var(--text);
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 24px;
@@ -18,7 +35,7 @@
     .container {
       max-width: 1200px;
       margin: auto;
-      background: rgba(255,255,255,0.97);
+      background: var(--card-bg);
       padding: 36px;
       border-radius: 28px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.25);
@@ -35,18 +52,18 @@
 
     .subtitle {
       text-align: center;
-      color: #555;
+      color: var(--muted);
       margin-bottom: 28px;
     }
 
     .instructions {
-      background: #f9fafb;
+      background: rgba(255,255,255,0.15);
       border-left: 5px solid #833ab4;
       padding: 20px;
       border-radius: 16px;
       margin-bottom: 28px;
       line-height: 1.7;
-      color: #333;
+      color: var(--text);
     }
 
     .instructions code {
@@ -69,7 +86,7 @@
     }
 
     .card {
-      background: white;
+      background: var(--card-bg);
       border-radius: 20px;
       padding: 20px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.06);
@@ -86,7 +103,7 @@
       text-align: center;
       border: 3px dashed #c084fc;
       border-radius: 16px;
-      background: #faf5ff;
+      background: rgba(255,255,255,0.08);
       cursor: pointer;
       transition: 0.2s;
       margin-bottom: 12px;
@@ -103,6 +120,8 @@
     }
 
     textarea {
+      background: var(--input-bg);
+      color: var(--text);
       width: 100%; 
       height: 220px;
       padding: 12px;
@@ -126,6 +145,18 @@
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 10px 25px rgba(131,58,180,0.35);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(131,58,180,0.45);
+    }
+
+    #copyCodeBtn {
+      display: block;
+      margin: 20px auto;
+      padding: 14px 30px;
+      font-size: 16px;
     }
 
     #oldFileName,
@@ -174,7 +205,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>📈 Instagram Follower Tracker</h1>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+      <h1 style="margin:0 auto;">📈 Instagram Follower Tracker</h1>
+      <button id="themeToggle" style="margin:0;padding:10px 16px;font-size:14px;">🌙 Dark Mode</button>
+    </div>
     <p class="subtitle">Upload or drag and drop two follower files to see who unfollowed you.</p>
 
     <div class="instructions">
@@ -182,13 +216,15 @@
       1. Open Instagram on your computer.<br>
       2. Go to your profile → Followers.<br>
       3. Scroll all the way to the bottom.<br>
-      4. Press <strong>F12 (or Fn + F12)</strong> and open the <strong>Console</strong> tab.<br>
-      5. If <strong>allow pasting</strong> doesn't work at first, type any letter (like <strong>a</strong>) once, then type <strong>allow pasting</strong> and press Enter.<br>
+      4. Press F12 (or Fn + F12) and open the Console tab.<br>
+      5. If allow pasting doesn't work at first, type any letter (like a) once, then type allow pasting and press Enter.<br>
       6. Paste the script below and press Enter.<br>
-      7. A file named <strong>followers.txt</strong> will be downloaded. Rename it to something like <strong>followers1.txt</strong>.<br>
+      7. A file named followers.txt will be downloaded. Rename it to something like followers1.txt.<br>
       8. For the second time, Rename it followers2.txt, And drop them both below 👇
 
-      <code>const dialog = document.querySelector('[role="dialog"]');
+      <button id="copyCodeBtn">📋 Copy Extractor Code</button>
+
+      <code id="extractorCode">const dialog = document.querySelector('[role="dialog"]');
 if (!dialog) {
   alert('Open your Followers popup first.');
 } else {
@@ -202,7 +238,7 @@ if (!dialog) {
 
   const unique = [...new Set(usernames)].sort();
 
-  const blob = new Blob([unique.join('\n')], { type: 'text/plain' });
+  const blob = new Blob([unique.join('\\n')], { type: 'text/plain' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'followers.txt';
@@ -238,17 +274,40 @@ if (!dialog) {
 
     <div id="summary"></div>
 
+    <div class="grid" style="margin-top:20px;">
+      <div class="card" style="text-align:center;">
+        <h3>👥 Previous</h3>
+        <div id="prevCount" style="font-size:32px;font-weight:bold;">0</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <h3>🆕 Current</h3>
+        <div id="currCount" style="font-size:32px;font-weight:bold;">0</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <h3>💔 Lost</h3>
+        <div id="lostCount" style="font-size:32px;font-weight:bold;color:#ef4444;">0</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <h3>🎉 Gained</h3>
+        <div id="gainCount" style="font-size:32px;font-weight:bold;color:#22c55e;">0</div>
+      </div>
+    </div>
+
     <div class="grid results">
       <div class="card">
         <h3>💔 Unfollowed You</h3>
+        <input type="text" id="searchUnfollowed" placeholder="Search usernames..." style="margin-bottom:10px;padding:10px;border-radius:10px;border:1px solid #ccc;">
         <textarea id="unfollowed" readonly></textarea>
         <button class="small-btn" onclick="downloadText('unfollowed', 'unfollowed-users.txt')">⬇ Download</button>
+        <button class="small-btn" onclick="copyText('unfollowed')">📋 Copy</button>
       </div>
 
       <div class="card">
         <h3>🎉 New Followers</h3>
+        <input type="text" id="searchFollowed" placeholder="Search usernames..." style="margin-bottom:10px;padding:10px;border-radius:10px;border:1px solid #ccc;">
         <textarea id="followed" readonly></textarea>
         <button class="small-btn" onclick="downloadText('followed', 'new-followers.txt')">⬇ Download</button>
+        <button class="small-btn" onclick="copyText('followed')">📋 Copy</button>
       </div>
     </div>
 
@@ -328,6 +387,11 @@ if (!dialog) {
         if (!oldSet[newList[i]]) followed.push(newList[i]);
       }
 
+      document.getElementById('prevCount').textContent = oldList.length;
+      document.getElementById('currCount').textContent = newList.length;
+      document.getElementById('lostCount').textContent = unfollowed.length;
+      document.getElementById('gainCount').textContent = followed.length;
+
       document.getElementById('summary').innerHTML =
         'Previous followers: ' + oldList.length + '<br>' +
         'Current followers: ' + newList.length + '<br>' +
@@ -338,6 +402,22 @@ if (!dialog) {
 
       document.getElementById('followed').value =
         followed.length ? followed.join('\n') : 'No new followers.';
+    }
+
+    function copyText(textareaId) {
+      navigator.clipboard.writeText(document.getElementById(textareaId).value);
+      alert('Copied to clipboard!');
+    }
+
+    function filterTextarea(searchId, textareaId, originalData) {
+      var search = document.getElementById(searchId);
+      search.addEventListener('input', function() {
+        var term = this.value.toLowerCase();
+        var filtered = originalData.filter(function(name) {
+          return name.toLowerCase().includes(term);
+        });
+        document.getElementById(textareaId).value = filtered.join('\n');
+      });
     }
 
     function downloadText(textareaId, filename) {
@@ -351,7 +431,40 @@ if (!dialog) {
 
     setupDrop('oldDrop', 'oldFile', 'oldFollowers', 'oldFileName');
     setupDrop('newDrop', 'newFile', 'newFollowers', 'newFileName');
-    document.getElementById('compareBtn').addEventListener('click', compareFollowers);
+    document.getElementById('compareBtn').addEventListener('click', function() {
+      compareFollowers();
+
+      var unfollowedData =
+        document.getElementById('unfollowed').value
+        .split('\n')
+        .filter(Boolean);
+
+      var followedData =
+        document.getElementById('followed').value
+        .split('\n')
+        .filter(Boolean);
+
+      filterTextarea('searchUnfollowed', 'unfollowed', unfollowedData);
+      filterTextarea('searchFollowed', 'followed', followedData);
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      this.textContent = document.body.classList.contains('dark')
+        ? '☀️ Light Mode'
+        : '🌙 Dark Mode';
+    });
+
+    document.getElementById('copyCodeBtn').addEventListener('click', function() {
+      var codeText = document.getElementById('extractorCode').textContent;
+      navigator.clipboard.writeText(codeText).then(function() {
+        var originalText = document.getElementById('copyCodeBtn').textContent;
+        document.getElementById('copyCodeBtn').textContent = '✅ Copied!';
+        setTimeout(function() {
+          document.getElementById('copyCodeBtn').textContent = originalText;
+        }, 2000);
+      });
+    });
   </script>
 </body>
 </html>
