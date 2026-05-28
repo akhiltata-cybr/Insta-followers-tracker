@@ -7,7 +7,7 @@ This tool helps users compare follower snapshots to detect:
 - New followers
 - Follower changes over time
   
-NOTE: The first file you download will serve as your initial followers list. The next time you want to check for unfollowers or new followers, upload the previously saved file along with the newly downloaded one.
+NOTE: The first file you download will serve as your initial followers list. The next time you want to check for unfollowers or new followers, upload the previously saved file along with the newly downloaded file to compare.
 
 ## Features
 - Compare follower snapshots
@@ -26,34 +26,17 @@ NOTE: The first file you download will serve as your initial followers list. The
 
 ## Getting Started - Step by Step Guide
 
-### Step 1: Click on Followers Button
-Open your Instagram profile and click on the **Followers** button to open your followers list.
+Follow these 4 simple steps to export your followers list:
 
-![Step 1 - Followers Button](https://github.com/akhiltata-cybr/Insta-followers-tracker/raw/main/step-1-followers-button.png.png)
+![How to Export Instagram Followers](https://github.com/akhiltata-cybr/Insta-followers-tracker/raw/main/screenshot.png)
 
-### Step 2: Scroll All The Way To The Bottom
-Scroll down using the scrollbar on the right side until you reach the very bottom of the list. This ensures all followers are loaded before running the script.
+**Step 1:** Open your Instagram profile and click on the **Followers** button to open your followers list.
 
-**Important:** Make sure you scroll all the way to the bottom so that all followers are loaded.
+**Step 2:** Scroll down using the scrollbar on the right side until you reach the very bottom of the list. Make sure all followers are loaded.
 
-![Step 2 - Scroll To Bottom](https://github.com/akhiltata-cybr/Insta-followers-tracker/raw/main/step-2-scroll-to-bottom.png.png)
+**Step 3:** Open the browser Developer Console (Press `F12` or `Ctrl+Shift+J`), go to the Console tab, and paste the extractor script.
 
-### Step 3: Open Console & Paste Script
-1. Open the browser Developer Console (Press `F12` or `Ctrl+Shift+J`)
-2. Go to the **Console** tab
-3. If Chrome blocks pasting, type `allow pasting` and press Enter
-4. Paste the extractor script and press Enter
-
-The script will extract all your followers and automatically download a file.
-
-![Step 3 - Console & Paste Script](https://github.com/akhiltata-cybr/Insta-followers-tracker/raw/main/step-3-console-paste-script.png.png)
-
-### Step 4: Rename & Save The File
-When the download dialog appears, rename the file to something descriptive (e.g., `initial_followers.txt` or `followers_may_2024.txt`).
-
-This naming convention helps you keep track of different follower snapshots over time without overwriting previous data.
-
-![Step 4 - Rename & Save File](https://github.com/akhiltata-cybr/Insta-followers-tracker/raw/main/step-4-rename-save-file.png.png)
+**Step 4:** When the download dialog appears, rename the file to something descriptive (e.g., `initial_followers.txt`).
 
 ---
 
