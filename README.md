@@ -29,14 +29,14 @@ NOTE: The first file you download will serve as your initial followers list. The
 ### Step 1: Click on Followers Button
 Open your Instagram profile and click on the **Followers** button to open your followers list.
 
-![Step 1 - Followers Button](./screenshots/step-1-followers-button.png)
+![Step 1 - Followers Button](./step-1-followers-button.png.png)
 
 ### Step 2: Scroll All The Way To The Bottom
 Scroll down using the scrollbar on the right side until you reach the very bottom of the list. This ensures all followers are loaded before running the script.
 
 **Important:** Make sure you scroll all the way to the bottom so that all followers are loaded.
 
-![Step 2 - Scroll To Bottom](./screenshots/step-2-scroll-to-bottom.png)
+![Step 2 - Scroll To Bottom](./step-2-scroll-to-bottom.png.png)
 
 ### Step 3: Open Console & Paste Script
 1. Open the browser Developer Console (Press `F12` or `Ctrl+Shift+J`)
@@ -46,14 +46,14 @@ Scroll down using the scrollbar on the right side until you reach the very botto
 
 The script will extract all your followers and automatically download a file.
 
-![Step 3 - Console & Paste Script](./screenshots/step-3-console-paste-script.png)
+![Step 3 - Console & Paste Script](./step-3-console-paste-script.png.png)
 
 ### Step 4: Rename & Save The File
 When the download dialog appears, rename the file to something descriptive (e.g., `initial_followers.txt` or `followers_may_2024.txt`).
 
 This naming convention helps you keep track of different follower snapshots over time without overwriting previous data.
 
-![Step 4 - Rename & Save File](./screenshots/step-4-rename-save-file.png)
+![Step 4 - Rename & Save File](./step-4-rename-save-file.png.png)
 
 ---
 
