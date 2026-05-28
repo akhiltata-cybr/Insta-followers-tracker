@@ -7,7 +7,7 @@ This tool helps users compare follower snapshots to detect:
 - New followers
 - Follower changes over time
   
-NOTE: The first file you download will serve as your initial followers list. The next time you want to check for unfollowers or new followers, upload the previously saved file along with the newly downloaded file to compare.
+NOTE: The first file you download will serve as your initial followers list. The next time you want to check for unfollowers or new followers, upload the previously saved file along with the newly downloaded file.
 
 ## Features
 - Compare follower snapshots
@@ -28,7 +28,7 @@ NOTE: The first file you download will serve as your initial followers list. The
 
 Follow these 4 simple steps to export your followers list:
 
-![How to Export Instagram Followers](https://github.com/akhiltata-cybr/Insta-followers-tracker/raw/main/screenshot.png)
+![How to Export Instagram Followers](https://github.com/akhiltata-cybr/Insta-followers-tracker/raw/main/Screenshot%20guide.png)
 
 **Step 1:** Open your Instagram profile and click on the **Followers** button to open your followers list.
 
