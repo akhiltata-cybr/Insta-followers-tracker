@@ -6,6 +6,8 @@ This tool helps users compare follower snapshots to detect:
 - Unfollowers
 - New followers
 - Follower changes over time
+  
+NOTE: The first file you download will serve as your initial followers list. The next time you want to check for unfollowers or new followers, upload the previously saved file along with the newly downloaded followers file for comparison.
 
 ## Features
 - Compare follower snapshots
