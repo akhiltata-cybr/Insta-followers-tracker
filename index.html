@@ -238,7 +238,7 @@ if (!dialog) {
 
   const unique = [...new Set(usernames)].sort();
 
-  const blob = new Blob([unique.join('\\n')], { type: 'text/plain' });
+  const blob = new Blob([unique.join('\n')], { type: 'text/plain' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = 'followers.txt';
